@@ -30,8 +30,6 @@ jobs:
         
     - name: Commit and push changes
       run: |
-        git config --global user.email ""
-        git config --global user.name ""
         if [ -n "$(git status --porcelain)" ]; then
           git add ip.txt
           git commit -m "Automatic update"
