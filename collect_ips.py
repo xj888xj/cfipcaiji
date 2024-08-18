@@ -6,7 +6,6 @@ import os
 # 目标URL列表
 urls = ['https://monitor.gacjie.cn/page/cloudflare/ipv4.html', 
         'https://ip.164746.xyz'
-        'https://raw.githubusercontent.com/ymyuuu/IPDB/main/bestcf.txt'
         ]
 
 # 正则表达式用于匹配IP地址
@@ -29,9 +28,7 @@ with open('ip.txt', 'w') as file:
         if url == 'https://monitor.gacjie.cn/page/cloudflare/ipv4.html':
             elements = soup.find_all('tr')
         elif url == 'https://ip.164746.xyz':
-            elements = soup.find_all('tr')
-        elif url == 'https://raw.githubusercontent.com/ymyuuu/IPDB/main/bestcf.txt':
-            elements = soup.find_all('tr')                
+            elements = soup.find_all('tr')             
         else:
             elements = soup.find_all('li')
         
