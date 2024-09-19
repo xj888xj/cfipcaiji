@@ -1,4 +1,4 @@
-name: Update Cloudflare DNS
+name: Update Cloudflare DNS bestcfip
 
 on:
   schedule:
