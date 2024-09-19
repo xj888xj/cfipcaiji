@@ -1,0 +1,33 @@
+name: Update Cloudflare DNS
+
+on:
+  schedule:
+    - cron: '10 */4 * * *' # 每4小时运行一次
+  workflow_dispatch: # 允许手动触发
+  #push: # 允许提交触发
+
+jobs:
+  update_dns:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: Run Python script
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        CLOUDFLARE_SUBDOMAIN2: ${{ secrets.CLOUDFLARE_SUBDOMAIN2 }}
+      run: |
+        python update_cloudflare_dns2.py2
