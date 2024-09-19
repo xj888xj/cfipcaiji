@@ -30,4 +30,4 @@ jobs:
         CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
         CLOUDFLARE_SUBDOMAIN2: ${{ secrets.CLOUDFLARE_SUBDOMAIN2 }}
       run: |
-        python update_cloudflare_dns2.py2
+        python update_cloudflare_dns2.py
