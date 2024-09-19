@@ -63,7 +63,7 @@ def download_ip_list(url, save_path):
             # 遍历每一行
             for line in lines:
                 # 通过空格分割行
-                data = line.split()
+                data = line.split(#)
 
                 # 将数据写入CSV文件
                 csv_writer.writerow(data)
