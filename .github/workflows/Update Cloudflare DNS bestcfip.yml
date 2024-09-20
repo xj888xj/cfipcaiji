@@ -140,7 +140,7 @@ jobs:
         delete_dns_records(subdomain)
 
         # 定义文件URL和保存路径
-        url = "https://raw.githubusercontent.com/xj888xj/CFCDN-AutoYX/main/yx_ips.txt"
+        url = "https://raw.githubusercontent.com/ymyuuu/IPDB/main/bestcf.txt"
         save_path = "bestcfip.csv"
 
         # 下载IP地址列表
