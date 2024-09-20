@@ -35,10 +35,10 @@ jobs:
         # 目标URL列表
         urls = ['https://monitor.gacjie.cn/page/cloudflare/ipv4.html', 
                 'https://ip.164746.xyz',
-                'https://cf.090227.xyz/',
-                'https://stock.hostmonit.com/CloudFlareYes',
-                'https://345673.xyz/',
-                'https://raw.githubusercontent.com/ymyuuu/IPDB/main/bestcf.txt'
+                #'https://cf.090227.xyz/',
+                #'https://stock.hostmonit.com/CloudFlareYes',
+                #'https://www.182682.xyz/page/cloudflare/ipv4.html',
+                'https://ipdb.api.030101.xyz/?type=bestcf&country=true'
                 ]
 
         # 正则表达式用于匹配IP地址
@@ -62,13 +62,13 @@ jobs:
                     elements = soup.find_all('tr')
                 elif url == 'https://ip.164746.xyz':               
                     elements = soup.find_all('tr')
-                elif url == 'https://cf.090227.xyz/':
-                    elements = soup.find_all('tr')
-                elif url == 'https://stock.hostmonit.com/CloudFlareYes':
-                    elements = soup.find_all('tr')
-                elif url == 'https://345673.xyz':
-                    elements = soup.find_all('tr')
-                elif url == 'https://raw.githubusercontent.com/ymyuuu/IPDB/main/bestcf.txt':
+                #elif url == 'https://cf.090227.xyz/':
+                #    elements = soup.find_all('tr')
+                #elif url == 'https://stock.hostmonit.com/CloudFlareYes':
+                #    elements = soup.find_all('tr')
+                #elif url == 'https://www.182682.xyz/page/cloudflare/ipv4.html'':
+                #    elements = soup.find_all('tr')
+                elif url == 'https://ipdb.api.030101.xyz/?type=bestcf&country=true':
                     elements = soup.find_all('tr')    
                 else:
                     elements = soup.find_all('li')
