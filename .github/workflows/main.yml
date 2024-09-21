@@ -38,7 +38,7 @@ jobs:
                 'https://ip.164746.xyz',
                 #'https://cf.090227.xyz/',
                 #'https://stock.hostmonit.com/CloudFlareYes',
-                'https://ipdb.api.030101.xyz/?type=bestcf&country=true'
+                'https://raw.githubusercontent.com/ymyuuu/IPDB/main/bestcf.txt'
                 ]
 
         # 正则表达式用于匹配IP地址
@@ -66,7 +66,7 @@ jobs:
                 #    elements = soup.find_all('tr')
                 #elif url == 'https://stock.hostmonit.com/CloudFlareYes':
                 #    elements = soup.find_all('tr')
-                elif url == 'https://ipdb.api.030101.xyz/?type=bestcf&country=true':
+                elif url == 'https://raw.githubusercontent.com/ymyuuu/IPDB/main/bestcf.txt':
                     elements = soup.find_all('tr')    
                 else:
                     elements = soup.find_all('li')
