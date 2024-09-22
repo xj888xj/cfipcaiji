@@ -78,4 +78,14 @@ jobs:
         print('IP地址已保存到ip.txt文件中。')
         EOF
         
-    - uses: stefanzweifel/git-auto-commit-action@v5
+    - name: Commit and push changes
+      run: |
+        git config --global user.email "tianshideyou@proton.me"
+        git config --global user.name "tianshipapa"
+        if [ -n "$(git status --porcelain)" ]; then
+          git add ip.txt
+          git commit -m "Automatic update"
+          git push
+        else
+          echo "No changes detected, skipping commit."
+        fi
