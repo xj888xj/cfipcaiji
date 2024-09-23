@@ -74,7 +74,7 @@ jobs:
           if __name__ == "__main__":
               telecom_ips = main(urls)
               # 将结果写入 IP.txt 文件
-              with open('IP.txt', 'w') as f:
+              with open('ip.txt', 'w') as f:
                   for ip in telecom_ips:
                       f.write(f"{ip}\n")
               print("最终提取的电信 IP 地址:", telecom_ips)
@@ -84,7 +84,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add IP.txt
+          git add ip.txt
           git commit -m "Add extracted telecom IPs"
           git push
         env:
