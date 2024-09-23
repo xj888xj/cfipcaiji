@@ -76,10 +76,3 @@ jobs:
             print("最终提取的电信 IP 地址:", telecom_ips)
 
         EOF
-        
-    - name: Commit and push changes
-      run: |
-        git config --global user.email "tianshideyou@proton.me"
-        git config --global user.name "tianshipapa"
-        git add ip.txt
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Automatic update" && git push)
