@@ -24,7 +24,8 @@ jobs:
           pip install requests
 
       - name: Run IP extraction script
-        run: |
+        run: | 
+          python << EOF
           import requests
           import re
           import warnings
@@ -77,6 +78,7 @@ jobs:
                   for ip in telecom_ips:
                       f.write(f"{ip}\n")
               print("最终提取的电信 IP 地址:", telecom_ips)
+          EOF
 
       - name: Commit results
         run: |
