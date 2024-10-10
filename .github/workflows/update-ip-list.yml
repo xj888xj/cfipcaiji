@@ -47,7 +47,7 @@ jobs:
                 response.raise_for_status()
                 soup = BeautifulSoup(response.text, 'html.parser')
                 
-                if url in ['https://ip.164746.xyz', 'https://www.182682.xyz/page/cloudflare/ipv4.html', 'https://cf.090227.xyz/']:
+                if url in ['https://ip.164746.xyz', 'https://www.182682.xyz/page/cloudflare/address_v4.html', 'https://cf.090227.xyz/']:
                     elements = soup.find_all('tr')
                 else:
                     elements = soup.find_all('li')
