@@ -1,0 +1,111 @@
+name: Update DXIP List AI 241010
+
+on:
+  schedule:
+    - cron: '0 */4 * * *' # 每4小时运行一次
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  extract-ips:
+    runs-on: ubuntu-latest  # 使用 Ubuntu 环境
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # 指定 Python 版本
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Run IP extraction script
+        run: | 
+          python << EOF
+          import requests
+          import re
+          import socket
+          import time
+          import warnings
+          from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+          # 忽略 SSL 警告
+          warnings.simplefilter('ignore', InsecureRequestWarning)
+
+          # 要访问的 URL 列表
+          urls = [
+              'https://www.182682.xyz/page/cloudflare/address_v4.html',
+              'https://ip.164746.xyz',
+              'https://cf.090227.xyz/'
+          ]
+
+          def fetch_page_content(url):
+              """请求网页并返回内容，如果请求失败则返回 None。"""
+              try:
+                  response = requests.get(url, verify=False)  # 忽略 SSL 证书验证
+                  response.raise_for_status()  # 检查请求是否成功
+                  return response.text
+              except requests.exceptions.RequestException as e:
+                  print(f"请求错误: {e}")
+                  return None  # 返回 None 表示请求失败
+
+          def extract_ips_from_content(content):
+              """从网页内容中提取 IP 地址。"""
+              ip_pattern = r'\b(?:\d{1,3}\.){3}\d{1,3}\b'
+              return set(re.findall(ip_pattern, content))  # 使用集合去重
+
+          def ping_ip(ip, port=443):
+              """测试 IP 的 TCP 延迟。"""
+              start_time = time.time()
+              try:
+                  with socket.create_connection((ip, port), timeout=5):
+                      return time.time() - start_time  # 返回延迟
+              except (socket.timeout, ConnectionRefusedError):
+                  return None  # 返回 None 表示连接失败
+
+          def main(urls):
+              """主函数，处理所有 URL 并提取电信 IP 地址。"""
+              all_telecom_ips = set()
+
+              for url in urls:
+                  content = fetch_page_content(url)
+                  if content and '电信' in content:
+                      ips = extract_ips_from_content(content)
+                      all_telecom_ips.update(ips)  # 更新集合
+                  else:
+                      print(f"页面 {url} 中没有找到电信相关信息或请求失败。")
+
+              # 测试延迟并返回前10个延迟最低的 IP
+              ip_latencies = {}
+              for ip in all_telecom_ips:
+                  latency = ping_ip(ip)
+                  if latency is not None:
+                      ip_latencies[ip] = latency
+                      print(f"IP {ip} 的延迟: {latency:.2f} 秒")
+
+              # 按延迟排序并取前10个
+              sorted_ips = sorted(ip_latencies.items(), key=lambda x: x[1])[:10]
+              return [ip for ip, _ in sorted_ips]
+
+          # 执行主函数并输出结果
+          if __name__ == "__main__":
+              telecom_ips = main(urls)
+              # 将结果写入 IP.txt 文件
+              with open('ip.txt', 'w') as f:
+                  for ip in telecom_ips:
+                      f.write(f"{ip}\n")
+              print("最终提取的电信 IP 地址:", telecom_ips)
+          EOF
+
+      - name: Commit results
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add ip.txt
+          git commit -m "Add extracted telecom IPs with lowest latency"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
